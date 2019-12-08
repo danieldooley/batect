@@ -417,8 +417,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#see-a-list-of-available-tasks-list-tasks" class="md-nav__link">
-    See a list of available tasks (--list-tasks)
+  <a href="#see-a-list-of-available-tasks-list-tasks-or-t" class="md-nav__link">
+    See a list of available tasks (--list-tasks or -T)
   </a>
   
 </li>
@@ -460,9 +460,36 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#customise-docker-connection-options" class="md-nav__link">
+    Customise Docker connection options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#use-a-non-standard-docker-host-docker-host" class="md-nav__link">
     Use a non-standard Docker host (--docker-host)
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-docker-over-tls-docker-tls-and-docker-tls-verify" class="md-nav__link">
+    Connect to Docker over TLS (--docker-tls and --docker-tls-verify)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customise-certificates-used-to-provide-authentication-to-daemon-and-to-verify-daemons-identity-docker-cert-path-docker-tls-ca-cert-docker-tls-cert-and-docker-tls-key" class="md-nav__link">
+    Customise certificates used to provide authentication to daemon and to verify daemon's identity (--docker-cert-path, --docker-tls-ca-cert, --docker-tls-cert and --docker-tls-key)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -829,8 +856,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#see-a-list-of-available-tasks-list-tasks" class="md-nav__link">
-    See a list of available tasks (--list-tasks)
+  <a href="#see-a-list-of-available-tasks-list-tasks-or-t" class="md-nav__link">
+    See a list of available tasks (--list-tasks or -T)
   </a>
   
 </li>
@@ -872,9 +899,36 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#customise-docker-connection-options" class="md-nav__link">
+    Customise Docker connection options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#use-a-non-standard-docker-host-docker-host" class="md-nav__link">
     Use a non-standard Docker host (--docker-host)
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-docker-over-tls-docker-tls-and-docker-tls-verify" class="md-nav__link">
+    Connect to Docker over TLS (--docker-tls and --docker-tls-verify)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customise-certificates-used-to-provide-authentication-to-daemon-and-to-verify-daemons-identity-docker-cert-path-docker-tls-ca-cert-docker-tls-cert-and-docker-tls-key" class="md-nav__link">
+    Customise certificates used to provide authentication to daemon and to verify daemon's identity (--docker-cert-path, --docker-tls-ca-cert, --docker-tls-cert and --docker-tls-key)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -966,7 +1020,7 @@ Use this option to disable this behaviour.</p>
 <div class="codehilite"><pre><span></span>./batect --no-proxy-vars the-task
 </pre></div>
 
-<h2 id="see-a-list-of-available-tasks-list-tasks">See a list of available tasks <small>(<code>--list-tasks</code>)</small><a class="headerlink" href="#see-a-list-of-available-tasks-list-tasks" title="Permanent link">&para;</a></h2>
+<h2 id="see-a-list-of-available-tasks-list-tasks-or-t">See a list of available tasks <small>(<code>--list-tasks</code> or <code>-T</code>)</small><a class="headerlink" href="#see-a-list-of-available-tasks-list-tasks-or-t" title="Permanent link">&para;</a></h2>
 <p>batect can produce a short summary of all tasks in the current configuration file along with their
 <a href="config/Tasks.html#description"><code>description</code></a>, and grouped by their <a href="config/Tasks.html#group"><code>group</code></a>.</p>
 <p>For example, <code>./batect --list-tasks</code> produces output like this:</p>
@@ -998,13 +1052,35 @@ Use this option to instruct batect to use a different file.</p>
 <div class="codehilite"><pre><span></span>./batect --config-file my-other-config-file.yml the-task
 </pre></div>
 
-<h3 id="use-a-non-standard-docker-host-docker-host">Use a non-standard Docker host <small>(<code>--docker-host</code>)</small><a class="headerlink" href="#use-a-non-standard-docker-host-docker-host" title="Permanent link">&para;</a></h3>
+<h3 id="customise-docker-connection-options">Customise Docker connection options<a class="headerlink" href="#customise-docker-connection-options" title="Permanent link">&para;</a></h3>
+<h4 id="use-a-non-standard-docker-host-docker-host">Use a non-standard Docker host <small>(<code>--docker-host</code>)</small><a class="headerlink" href="#use-a-non-standard-docker-host-docker-host" title="Permanent link">&para;</a></h4>
 <p>By default, batect will connect to the Docker daemon using the path provided in the <code>DOCKER_HOST</code> environment variable, or
 the default path for your operating system if <code>DOCKER_HOST</code> is not set. Use this option to instruct batect to use a different path.</p>
 <p>Example:</p>
 <div class="codehilite"><pre><span></span>./batect --docker-host unix:///var/run/other-docker.sock the-task
 </pre></div>
 
+<h4 id="connect-to-docker-over-tls-docker-tls-and-docker-tls-verify">Connect to Docker over TLS <small>(<code>--docker-tls</code> and <code>--docker-tls-verify</code>)</small><a class="headerlink" href="#connect-to-docker-over-tls-docker-tls-and-docker-tls-verify" title="Permanent link">&para;</a></h4>
+<p>By default, the Docker daemon only accepts plaintext connections from the local machine. If your daemon requires TLS, use the <code>--docker-tls-verify</code> option
+to instruct batect to use TLS. batect will also automatically enable this option if the <code>DOCKER_TLS_VERIFY</code> environment variable is set to <code>1</code>.</p>
+<p>If your daemon presents a certificate that does not match its hostname, use the <code>--docker-tls</code> option (without <code>--docker-tls-verify</code>) to instruct
+batect to not verify the hostname.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using <code>--docker-tls</code> without <code>--docker-tls-verify</code> is insecure and should only be used if you understand the implications of this.</p>
+</div>
+<p>These options mirror the behaviour of the <code>docker</code> CLI's <code>--tls</code> and <code>--tlsverify</code> options.</p>
+<h4 id="customise-certificates-used-to-provide-authentication-to-daemon-and-to-verify-daemons-identity-docker-cert-path-docker-tls-ca-cert-docker-tls-cert-and-docker-tls-key">Customise certificates used to provide authentication to daemon and to verify daemon's identity <small>(<code>--docker-cert-path</code>, <code>--docker-tls-ca-cert</code>, <code>--docker-tls-cert</code> and <code>--docker-tls-key</code>)</small><a class="headerlink" href="#customise-certificates-used-to-provide-authentication-to-daemon-and-to-verify-daemons-identity-docker-cert-path-docker-tls-ca-cert-docker-tls-cert-and-docker-tls-key" title="Permanent link">&para;</a></h4>
+<p>If your Docker daemon requires TLS, batect needs three files in order to connect to it:</p>
+<ul>
+<li>the CA certificate that can be used to verify certificates presented by the Docker daemon (<code>--docker-tls-ca-cert</code>)</li>
+<li>the certificate that can be used to prove your identity to the Docker daemon (<code>--docker-tls-cert</code>) and corresponding private key (<code>--docker-tls-key</code>)</li>
+</ul>
+<p>By default, these files are stored in <code>~/.docker</code> and are named <code>ca.pem</code>, <code>cert.pem</code> and <code>key.pem</code> respectively.</p>
+<p>You can instruct batect use a non-default location for any of these files with the options mentioned above, or override the default directory for these
+files with <code>--docker-cert-path</code>. If the <code>DOCKER_CERT_PATH</code> environment variable is set, batect will use that as the default directory.</p>
+<p>If both <code>--docker-cert-path</code> (or <code>DOCKER_CERT_PATH</code>) and a path for an individual file is provided, the path for the individual file takes precedence.</p>
+<p>These options mirror the behaviour of the <code>docker</code> CLI's <code>--tlscacert</code>, <code>--tlscert</code> and <code>--tlskey</code> options.</p>
 <h3 id="create-a-debugging-log-log-file">Create a debugging log <small>(<code>--log-file</code>)</small><a class="headerlink" href="#create-a-debugging-log-log-file" title="Permanent link">&para;</a></h3>
 <p>Use this option to instruct batect to generate a debugging log at the specified path as it runs. This may be requested if you submit an issue.</p>
 <p>If the log file already exists, batect will append further log messages to the end of the file.</p>

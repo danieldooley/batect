@@ -453,6 +453,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#devices" class="md-nav__link">
+    devices
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ports" class="md-nav__link">
     ports
   </a>
@@ -1020,6 +1027,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#devices" class="md-nav__link">
+    devices
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ports" class="md-nav__link">
     ports
   </a>
@@ -1310,7 +1324,7 @@ coloured output continue to work correctly inside the container.</p>
 <p>Two formats are supported:</p>
 <ul>
 <li>
-<p>Standard Docker <code>local:container</code> or <code>local:container:mode</code> format</p>
+<p>Standard Docker <code>local:container</code> or <code>local:container:options</code> format</p>
 </li>
 <li>
 <p>An expanded format:
@@ -1328,6 +1342,28 @@ coloured output continue to work correctly inside the container.</p>
 <p>On Windows, the local path can use either Windows-style (<code>path\to\thing</code>) or Unix-style (<code>path/to/thing</code>) paths, but for compatibility
 with users running on other operating systems, using Unix-style paths is recommended.</p>
 <p>See <a href="../tips/Performance.html#io-performance">this page</a> for more information on why using <code>cached</code> volume mounts may be worthwhile.</p>
+<h2 id="devices"><code>devices</code><a class="headerlink" href="#devices" title="Permanent link">&para;</a></h2>
+<p>List of device mounts to create for the container.</p>
+<p>Two formats are supported:</p>
+<ul>
+<li>
+<p>Standard Docker <code>local:container</code> or <code>local:container:options</code> format</p>
+</li>
+<li>
+<p>An expanded format:
+  <div class="codehilite"><pre><span></span><span class="nt">containers</span><span class="p">:</span>
+  <span class="nt">my-container</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+    <span class="l l-Scalar l-Scalar-Plain">devices</span><span class="p p-Indicator">:</span>
+    <span class="c1"># This is equivalent to /dev/sda:/dev/disk:r</span>
+    <span class="p p-Indicator">-</span> <span class="nt">local</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/sda</span>
+      <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/dev/disk</span>
+      <span class="nt">options</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">r</span>
+</pre></div></p>
+</li>
+</ul>
+<p>Note that the <code>local</code> device mounts will be different for Windows and Unix-like hosts. See the <a href="https://docs.docker.com/engine/reference/commandline/run/#add-host-device-to-container---device">Docker guide for adding host devices to containers</a> for more information.</p>
+<p>Available since v0.39.</p>
 <h2 id="ports"><code>ports</code><a class="headerlink" href="#ports" title="Permanent link">&para;</a></h2>
 <p>List of ports to make available to the host machine.</p>
 <p>Only TCP ports are supported at present.</p>
