@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -46,7 +46,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -57,12 +57,12 @@
       
     
     
-      <script src="assets/javascripts/modernizr.74668098.js"></script>
+      <script src="assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -383,6 +383,18 @@
   <li class="md-nav__item">
     <a href="config/Overview.html" title="Overview" class="md-nav__link">
       Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="config/ConfigVariables.html" title="Config Variables" class="md-nav__link">
+      Config Variables
     </a>
   </li>
 
@@ -849,7 +861,7 @@ configuration of your build environment without having to install or configure a
 <p>So we've set up an isolated and repeatable build environment. However, where batect really shines is setting up integration and
 journey test environments - environments that require spinning up real (or fake) versions of dependencies such as databases or downstream services.</p>
 <p>Let's imagine our application just has one dependency, a Postgres database. We can define a Docker image for this with a Dockerfile:</p>
-<div class="codehilite"><pre><span></span><span class="k">FROM</span><span class="s"> postgres:9.6.2</span>
+<div class="codehilite"><pre><span></span><span class="k">FROM</span> <span class="s">postgres:9.6.2</span>
 </pre></div>
 
 <p>Save this as <code>.batect/database/Dockerfile</code>.</p>
@@ -860,7 +872,7 @@ your database tables and save it in the <code>.batect/database</code> folder you
 script run when the container starts. Any <code>.sql</code> file in the <code>/docker-entrypoint-initdb.d</code> directory will automatically be run when
 the container starts, so if we copy our <code>create-structure.sql</code> script into that directory in the image, then whenever it is started,
 our database structure will be created. So our Dockerfile now looks like:</p>
-<div class="codehilite"><pre><span></span><span class="k">FROM</span><span class="s"> postgres:9.6.2</span>
+<div class="codehilite"><pre><span></span><span class="k">FROM</span> <span class="s">postgres:9.6.2</span>
 
 <span class="k">COPY</span> create-structure.sql /docker-entrypoint-initdb.d/
 </pre></div>
@@ -875,7 +887,7 @@ from the sample project and copy it into our <code>.batect/database</code> folde
 database - if that succeeds, we can assume that the database is up and running. (There's
 <a href="https://github.com/docker-library/healthcheck/">a collection of sample health check scripts provided by Docker</a> you can use.)</p>
 <p>Then we need to tell Docker where to find our health check script, so we need to add it to our Dockerfile:</p>
-<div class="codehilite"><pre><span></span><span class="k">FROM</span><span class="s"> postgres:9.6.2</span>
+<div class="codehilite"><pre><span></span><span class="k">FROM</span> <span class="s">postgres:9.6.2</span>
 
 <span class="k">RUN</span> mkdir -p /tools
 <span class="k">COPY</span> health-check.sh /tools/
@@ -961,6 +973,7 @@ you can take a look at.</p>
                 
                   
                 
+                
               
               
                 
@@ -1040,7 +1053,7 @@ you can take a look at.</p>
       
     </div>
     
-      <script src="assets/javascripts/application.c648116f.js"></script>
+      <script src="assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
       

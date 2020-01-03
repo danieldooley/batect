@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -46,7 +46,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -57,12 +57,12 @@
       
     
     
-      <script src="assets/javascripts/modernizr.74668098.js"></script>
+      <script src="assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -334,6 +334,18 @@
 
 
   <li class="md-nav__item">
+    <a href="config/ConfigVariables.html" title="Config Variables" class="md-nav__link">
+      Config Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="config/Containers.html" title="Containers" class="md-nav__link">
       Containers
     </a>
@@ -396,6 +408,27 @@
   
     <nav class="md-nav">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-config-variables-from-a-file-config-vars-file" class="md-nav__link">
+    Set config variables from a file (--config-vars-file)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-a-config-variable-config-var" class="md-nav__link">
+    Set a config variable (--config-var)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#override-the-image-used-by-a-container-override-image" class="md-nav__link">
+    Override the image used by a container (--override-image)
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#disable-cleaning-up-no-cleanup-no-cleanup-after-failure-and-no-cleanup-after-success" class="md-nav__link">
@@ -837,6 +870,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#set-config-variables-from-a-file-config-vars-file" class="md-nav__link">
+    Set config variables from a file (--config-vars-file)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-a-config-variable-config-var" class="md-nav__link">
+    Set a config variable (--config-var)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#override-the-image-used-by-a-container-override-image" class="md-nav__link">
+    Override the image used by a container (--override-image)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#disable-cleaning-up-no-cleanup-no-cleanup-after-failure-and-no-cleanup-after-success" class="md-nav__link">
     Disable cleaning up (--no-cleanup, --no-cleanup-after-failure and --no-cleanup-after-success)
   </a>
@@ -1001,6 +1055,38 @@
 <p>Run a task by running <code>./batect &lt;task-name&gt;</code>. For example, to run <code>the-task</code>, run <code>./batect the-task</code>.</p>
 <p>You can also pass arguments to the task command by passing those arguments by running <code>./batect &lt;task-name&gt; -- &lt;args...&gt;</code>.
 For example, to run the task <code>the-task</code> with the arguments <code>arg1 arg2</code>, run <code>./batect the-task -- arg1 arg2</code>.</p>
+<h3 id="set-config-variables-from-a-file-config-vars-file">Set config variables from a file <small>(<code>--config-vars-file</code>)</small><a class="headerlink" href="#set-config-variables-from-a-file-config-vars-file" title="Permanent link">&para;</a></h3>
+<p>By default, batect will automatically apply values for <a href="config/ConfigVariables.html">config variables</a> from the YAML file <code>batect.local.yml</code>
+if it exists.</p>
+<p>Use <code>--config-vars-file</code> to specify a different file to use.</p>
+<p>Values provided with <a href="#set-a-config-variable-config-var"><code>--config-var</code></a> take precedence over values provided in any file.</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span>./batect --config-vars-file batect.ci.yml the-task
+</pre></div>
+
+<p>Example <code>batect.ci.yml</code> contents:</p>
+<div class="codehilite"><pre><span></span><span class="nt">log_level</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug</span>
+<span class="nt">user_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">alex</span>
+</pre></div>
+
+<h3 id="set-a-config-variable-config-var">Set a config variable <small>(<code>--config-var</code>)</small><a class="headerlink" href="#set-a-config-variable-config-var" title="Permanent link">&para;</a></h3>
+<p>Use <code>--config-vars</code> to specify values for an individual <a href="config/ConfigVariables.html">config variable</a>.</p>
+<p>Values must be in the format <code>&lt;variable name&gt;=&lt;variable value&gt;</code>.</p>
+<p>Values provided with <code>--config-var</code> take precedence over values provided in a file (either explicitly with
+<a href="#set-config-variables-from-a-file-config-vars-file"><code>--config-vars-file</code></a> or from the default <code>batect.local.yml</code> file)
+and default values defined in the configuration file.</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span>./batect --config-var <span class="nv">log_level</span><span class="o">=</span>debug the-task
+</pre></div>
+
+<h3 id="override-the-image-used-by-a-container-override-image">Override the image used by a container <small>(<code>--override-image</code>)</small><a class="headerlink" href="#override-the-image-used-by-a-container-override-image" title="Permanent link">&para;</a></h3>
+<p>By default, batect will use the image defined in the configuration file (either with <a href="config/Containers.html#image"><code>image</code></a> or <a href="config/Containers.html#build_directory"><code>build_directory</code></a>).</p>
+<p>Use this option to override the value in the configuration file and use a different image for a specific container.</p>
+<p>Values must be in the format <code>&lt;container name&gt;=&lt;image&gt;</code>.</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span>./batect --override-image build-env<span class="o">=</span>ruby:2.7.0 the-task
+</pre></div>
+
 <h3 id="disable-cleaning-up-no-cleanup-no-cleanup-after-failure-and-no-cleanup-after-success">Disable cleaning up <small>(<code>--no-cleanup</code>, <code>--no-cleanup-after-failure</code> and <code>--no-cleanup-after-success</code>)</small><a class="headerlink" href="#disable-cleaning-up-no-cleanup-no-cleanup-after-failure-and-no-cleanup-after-success" title="Permanent link">&para;</a></h3>
 <p>By default, batect will automatically cleanup all containers and other resources it creates while running a task.
 However, sometimes it can be useful to leave all the created containers running to diagnose issues running a task.</p>
@@ -1105,23 +1191,19 @@ believe your console supports coloured output, or your console may incorrectly r
 <ul>
 <li>
 <p><code>fancy</code> is best for interactive use, providing very clean output about the current state of execution and showing output from only the task container</p>
-<details class="example"><summary><code>fancy</code> output mode example</summary><p><asciinema-player src="/assets/outputstyles/fancy.cast" cols="204" rows="50" preload="true" poster="npt:2.5"></asciinema-player></p>
-</details>
+<p><asciinema-player src="/assets/outputstyles/fancy.cast" cols="204" rows="20" preload="true" poster="npt:2.5"></asciinema-player></p>
 </li>
 <li>
 <p><code>simple</code> is best for non-interactive use (eg. on CI), providing a log of what happened and showing output from only the task container</p>
-<details class="example"><summary><code>simple</code> output mode example</summary><p><asciinema-player src="/assets/outputstyles/simple.cast" cols="204" rows="50" preload="true" poster="npt:2.5"></asciinema-player></p>
-</details>
+<p><asciinema-player src="/assets/outputstyles/simple.cast" cols="204" rows="20" preload="true" poster="npt:2.5"></asciinema-player></p>
 </li>
 <li>
 <p><code>all</code> displays output from all containers</p>
-<details class="example"><summary><code>all</code> output mode example</summary><p><asciinema-player src="/assets/outputstyles/interleaved.cast" cols="204" rows="50" preload="true" poster="npt:2.5"></asciinema-player></p>
-</details>
+<p><asciinema-player src="/assets/outputstyles/interleaved.cast" cols="204" rows="20" preload="true" poster="npt:4"></asciinema-player></p>
 </li>
 <li>
 <p><code>quiet</code> displays only the output from the task and error messages from batect</p>
-<details class="example"><summary><code>quiet</code> output mode example</summary><p><asciinema-player src="/assets/outputstyles/quiet.cast" cols="204" rows="50" preload="true" poster="npt:7"></asciinema-player></p>
-</details>
+<p><asciinema-player src="/assets/outputstyles/quiet.cast" cols="204" rows="20" preload="true" poster="npt:7"></asciinema-player></p>
 </li>
 </ul>
 <p>By default, batect will automatically pick an output style that it believes is appropriate for the environment it is running in -
@@ -1137,6 +1219,7 @@ believe your console supports coloured output, or your console may incorrectly r
 </ul>
                 
                   
+                
                 
               
               
@@ -1217,7 +1300,7 @@ believe your console supports coloured output, or your console may incorrectly r
       
     </div>
     
-      <script src="assets/javascripts/application.c648116f.js"></script>
+      <script src="assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
       

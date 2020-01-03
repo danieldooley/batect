@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -46,7 +46,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -57,12 +57,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -334,6 +334,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="ConfigVariables.html" title="Config Variables" class="md-nav__link">
+      Config Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -413,8 +425,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-variable-substitution" class="md-nav__link">
-    Environment variable substitution
+  <a href="#expressions" class="md-nav__link">
+    Expressions
   </a>
   
 </li>
@@ -987,8 +999,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-variable-substitution" class="md-nav__link">
-    Environment variable substitution
+  <a href="#expressions" class="md-nav__link">
+    Expressions
   </a>
   
 </li>
@@ -1209,6 +1221,7 @@
 <p>Each container definition is made up of:</p>
 <h2 id="image"><code>image</code><a class="headerlink" href="#image" title="Permanent link">&para;</a></h2>
 <p>Image name (in standard Docker image reference format) to use for this container. <strong>One of <code>image</code> or <code>build_directory</code> is required.</strong></p>
+<p>The image can be overridden when running a task with <a href="../CLIReference.html#override-the-image-used-by-a-container-override-image"><code>--override-image</code></a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>It is highly recommended that you specify a specific image version, and not use <code>latest</code>, to ensure that the same image is used
@@ -1219,10 +1232,12 @@ everywhere. For example, use <code>alpine:3.7</code>, not <code>alpine</code> or
 <strong>One of <code>image</code> or <code>build_directory</code> is required.</strong></p>
 <p>On Windows, <code>build_directory</code> can use either Windows-style (<code>path\to\thing</code>) or Unix-style (<code>path/to/thing</code>) paths, but for compatibility
 with users running on other operating systems, using Unix-style paths is recommended.</p>
+<p>The image can be overridden when running a task with <a href="../CLIReference.html#override-the-image-used-by-a-container-override-image"><code>--override-image</code></a>.</p>
 <h2 id="build_args"><code>build_args</code><a class="headerlink" href="#build_args" title="Permanent link">&para;</a></h2>
 <p>List of build args (in <code>name: value</code> format) to use when building the image in <a href="#build_directory"><code>build_directory</code></a>.</p>
 <p>Each build arg must be defined in the Dockerfile with an <code>ARG</code> instruction otherwise the value provided will have no effect.</p>
-<p>The value of environment variables from the host can be passed as build args using <a href="#environment-variable-substitution">the same syntax as for <code>environment</code></a>.</p>
+<p>The values of environment variables from the host and <a href="ConfigVariables.html">config variables</a> can be passed as build args
+using <a href="#expressions">the same syntax as for <code>environment</code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Use caution when using build args for secret values. Build arg values can be revealed by anyone with a copy of the image with the <code>docker history</code> command.</p>
@@ -1282,22 +1297,24 @@ batect will always convert the entrypoint provided here to the exec form when pa
 <h2 id="environment"><code>environment</code><a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p>List of environment variables (in <code>name: value</code> format) for the container.</p>
 <p>Prior to v0.21, environment variables were required to be supplied in <code>name=value</code> format.</p>
-<h3 id="environment-variable-substitution">Environment variable substitution<a class="headerlink" href="#environment-variable-substitution" title="Permanent link">&para;</a></h3>
-<p>You can pass environment variables from the host (ie. where you run batect) to the container by using any of the following formats:</p>
+<h3 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">&para;</a></h3>
+<p>In addition to providing a literal value, you can pass environment variables from the host
+(ie. where you run batect) to the container by using any of the following formats:</p>
 <ul>
 <li>
-<p><code>$&lt;name&gt;</code> or <code>${&lt;name&gt;}</code>: use the value of <code>&lt;name&gt;</code> from the host as the value inside the container.</p>
+<p><code>$name</code> or <code>${name}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
 <p>If the referenced host variable is not present, batect will show an error message and not start the task.</p>
 </li>
 <li>
-<p><code>${&lt;name&gt;:-&lt;default&gt;}</code>: use the value of <code>&lt;name&gt;</code> from the host as the value inside the container.</p>
-<p>If the referenced host variable is not present, <code>&lt;default&gt;</code> is used instead.</p>
-<p><code>&lt;default&gt;</code> can be empty, so <code>${&lt;name&gt;:-}</code> will use the value of <code>&lt;name&gt;</code> from the host if it is
+<p><code>${name:-default}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
+<p>If the referenced host variable is not present, <code>default</code> is used instead.</p>
+<p><code>default</code> can be empty, so <code>${name:-}</code> will use the value of <code>name</code> from the host if it is
 set, or a blank value if it is not set.</p>
 </li>
 </ul>
-<p>For example, to set <code>SUPER_SECRET_PASSWORD</code> in the container to the value of the <code>MY_PASSWORD</code> variable on the host, use
-<code>SUPER_SECRET_PASSWORD: $MY_PASSWORD</code> or <code>SUPER_SECRET_PASSWORD: ${MY_PASSWORD}</code>. Or, to default it to <code>insecure</code> if
+<p>You can also refer to the value of a <a href="ConfigVariables.html">config variable</a> with <code>&lt;name</code> or <code>&lt;{name}</code>.</p>
+<p>For example, to set <code>SUPER_SECRET_PASSWORD</code> in the container to the value of the <code>MY_PASSWORD</code> environment variable on the host,
+use <code>SUPER_SECRET_PASSWORD: $MY_PASSWORD</code> or <code>SUPER_SECRET_PASSWORD: ${MY_PASSWORD}</code>. Or, to default it to <code>insecure</code> if
 <code>MY_PASSWORD</code> is not set, use <code>SUPER_SECRET_PASSWORD: ${MY_PASSWORD:-insecure}</code>.</p>
 <p>Substitution in the middle of values is not supported (eg. <code>SUPER_SECRET_PASSWORD: My password is $MY_PASSWORD</code> will not work).</p>
 <div class="admonition warning">
@@ -1306,7 +1323,7 @@ set, or a blank value if it is not set.</p>
 runs between hosts, which is something you generally want to avoid.</p>
 </div>
 <p>The curly brace syntax for environment variables, including the ability to specify default values for environment variables,
-was added in v0.21.</p>
+was added in v0.21. <a href="ConfigVariables.html">Config variables</a> were added in v0.40.</p>
 <h3 id="term"><code>TERM</code><a class="headerlink" href="#term" title="Permanent link">&para;</a></h3>
 <p>The <code>TERM</code> environment variable, if set on the host, is always automatically passed through to the container. This ensures that features such as
 coloured output continue to work correctly inside the container.</p>
@@ -1618,6 +1635,7 @@ Once <code>database</code> reports as healthy, it will run <code>./apply-migrati
                 
                   
                 
+                
               
               
                 
@@ -1635,7 +1653,7 @@ Once <code>database</code> reports as healthy, it will run <code>./apply-migrati
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="Overview.html" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="ConfigVariables.html" title="Config Variables" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1644,7 +1662,7 @@ Once <code>database</code> reports as healthy, it will run <code>./apply-migrati
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Overview
+                Config Variables
               </span>
             </div>
           </a>
@@ -1697,7 +1715,7 @@ Once <code>database</code> reports as healthy, it will run <code>./apply-migrati
       
     </div>
     
-      <script src="../assets/javascripts/application.c648116f.js"></script>
+      <script src="../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
