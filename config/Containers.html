@@ -725,6 +725,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../tools/GitHubActions.html" title="GitHub Actions" class="md-nav__link">
+      GitHub Actions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../tools/Golang.html" title="Golang" class="md-nav__link">
       Golang
     </a>
@@ -1257,7 +1269,7 @@ using <a href="#expressions">the same syntax as for <code>environment</code></a>
 <p class="admonition-title">Note</p>
 <p>Keep in mind that this command is passed to the image's <code>ENTRYPOINT</code>, just like it would when using <code>docker run &lt;image&gt; &lt;command&gt;</code>
 directly.</p>
-<p>This means that if the entrypoint is not set or is not a shell, standard shell syntax features like <code>&amp;&amp;</code> might not work.</p>
+<p>This means that if the entrypoint is not set or is not a shell, standard shell syntax features like <code>$MY_ENVIRONMENT_VARIABLE</code> and <code>&amp;&amp;</code> might not work.</p>
 <p>See the Docker docs for <a href="https://docs.docker.com/engine/reference/builder/#cmd"><code>CMD</code></a> and
 <a href="https://docs.docker.com/engine/reference/builder/#entrypoint"><code>ENTRYPOINT</code></a> for more details.</p>
 <p>If you would like to use shell syntax features in your command, you have four options:</p>
