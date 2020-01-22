@@ -13,7 +13,7 @@
         <meta name="description" content="Documentation for batect, the build and testing environments as code tool">
       
       
-        <link rel="canonical" href="https://batect.charleskorn.com/GettingStarted.html">
+        <link rel="canonical" href="https://batect.dev/GettingStarted.html">
       
       
         <meta name="author" content="Charles Korn">
@@ -127,7 +127,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://batect.charleskorn.com" title="batect documentation" class="md-header-nav__button md-logo">
+        <a href="https://batect.dev" title="batect documentation" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -186,7 +186,7 @@
 
   
 
-<a href="https://github.com/charleskorn/batect/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/batect/batect/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -195,7 +195,7 @@
     </div>
   
   <div class="md-source__repository">
-    charleskorn/batect
+    batect/batect
   </div>
 </a>
           </div>
@@ -219,7 +219,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://batect.charleskorn.com" title="batect documentation" class="md-nav__button md-logo">
+    <a href="https://batect.dev" title="batect documentation" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
@@ -233,7 +233,7 @@
 
   
 
-<a href="https://github.com/charleskorn/batect/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/batect/batect/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -242,7 +242,7 @@
     </div>
   
   <div class="md-source__repository">
-    charleskorn/batect
+    batect/batect
   </div>
 </a>
     </div>
@@ -698,7 +698,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/charleskorn/batect/releases" title="Release notes" class="md-nav__link">
+    <a href="https://github.com/batect/batect/releases" title="Release notes" class="md-nav__link">
       Release notes
     </a>
   </li>
@@ -710,7 +710,7 @@
 
 
   <li class="md-nav__item">
-    <a href="https://github.com/charleskorn/batect/blob/master/ROADMAP.md" title="Roadmap" class="md-nav__link">
+    <a href="https://github.com/batect/batect/blob/master/ROADMAP.md" title="Roadmap" class="md-nav__link">
       Roadmap
     </a>
   </li>
@@ -780,11 +780,11 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/charleskorn/batect/edit/master/docs/content/GettingStarted.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/batect/batect/edit/master/docs/content/GettingStarted.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="getting-started-tutorial">Getting started tutorial<a class="headerlink" href="#getting-started-tutorial" title="Permanent link">&para;</a></h1>
-<p>The samples shown below are taken from the <a href="https://github.com/charleskorn/batect-sample-java">Java sample project</a>.</p>
+<p>The samples shown below are taken from the <a href="https://github.com/batect/batect-sample-java">Java sample project</a>.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>Before you begin, follow the <a href="QuickStart.html">installation steps</a> to setup batect.</p>
 <h2 id="first-steps-build-environment">First steps: build environment<a class="headerlink" href="#first-steps-build-environment" title="Permanent link">&para;</a></h2>
@@ -894,7 +894,7 @@ started - we have no way to know if the database is actually ready for use. If w
 to start running those tests until it's actually ready to use. While Postgres is usually pretty fast to start up, it's not instantaneous,
 and other things can take anywhere from a few moments to a minute or two to start up and be ready. We can use
 <a href="https://docs.docker.com/engine/reference/builder/#healthcheck">Docker's health check feature</a> to indicate when a container is ready for use.</p>
-<p>In our case, we can take <a href="https://github.com/charleskorn/batect-sample-java/tree/master/.batect/database/health-check.sh">the health check script</a>
+<p>In our case, we can take <a href="https://github.com/batect/batect-sample-java/tree/master/.batect/database/health-check.sh">the health check script</a>
 from the sample project and copy it into our <code>.batect/database</code> folder. All it does is try to issue a simple query against the
 database - if that succeeds, we can assume that the database is up and running. (There's
 <a href="https://github.com/docker-library/healthcheck/">a collection of sample health check scripts provided by Docker</a> you can use.)</p>
@@ -1040,7 +1040,7 @@ you can take a look at.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2017-2019 Charles Korn.
+            Copyright &copy; 2017-2020 Charles Korn.
           </div>
         
         powered by
@@ -1053,7 +1053,7 @@ you can take a look at.</p>
   <div class="md-footer-social">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css">
     
-      <a href="https://github.com/charleskorn/batect" class="md-footer-social__link fa fa-github"></a>
+      <a href="https://github.com/batect/batect" class="md-footer-social__link fa fa-github"></a>
     
       <a href="https://spectrum.chat/batect" class="md-footer-social__link fa fa-comments"></a>
     
