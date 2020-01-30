@@ -425,13 +425,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#expressions" class="md-nav__link">
-    Expressions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#term" class="md-nav__link">
     TERM
   </a>
@@ -1011,13 +1004,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#expressions" class="md-nav__link">
-    Expressions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#term" class="md-nav__link">
     TERM
   </a>
@@ -1230,6 +1216,11 @@
                 
                 
                 <h1 id="container-definitions">Container definitions<a class="headerlink" href="#container-definitions" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This page reflects the options available in the <a href="https://github.com/batect/batect/releases/latest">most recent version</a>
+of batect.</p>
+</div>
 <p>Each container definition is made up of:</p>
 <h2 id="image"><code>image</code><a class="headerlink" href="#image" title="Permanent link">&para;</a></h2>
 <p>Image name (in standard Docker image reference format) to use for this container. <strong>One of <code>image</code> or <code>build_directory</code> is required.</strong></p>
@@ -1246,20 +1237,16 @@ everywhere. For example, use <code>alpine:3.7</code>, not <code>alpine</code> or
 with users running on other operating systems, using Unix-style paths is recommended.</p>
 <p>The image can be overridden when running a task with <a href="../CLIReference.html#override-the-image-used-by-a-container-override-image"><code>--override-image</code></a>.</p>
 <h2 id="build_args"><code>build_args</code><a class="headerlink" href="#build_args" title="Permanent link">&para;</a></h2>
-<p>List of build args (in <code>name: value</code> format) to use when building the image in <a href="#build_directory"><code>build_directory</code></a>.</p>
+<p>List of build args (in <code>name: value</code> format) to use when building the image in <a href="#build_directory"><code>build_directory</code></a>. Values can be <a href="Overview.html#expressions">expressions</a>.</p>
 <p>Each build arg must be defined in the Dockerfile with an <code>ARG</code> instruction otherwise the value provided will have no effect.</p>
-<p>The values of environment variables from the host and <a href="ConfigVariables.html">config variables</a> can be passed as build args
-using <a href="#expressions">the same syntax as for <code>environment</code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Use caution when using build args for secret values. Build arg values can be revealed by anyone with a copy of the image with the <code>docker history</code> command.</p>
 </div>
-<p>Available since v0.28. The ability to use environment variable values in build args was added in v0.32.</p>
 <h2 id="dockerfile"><code>dockerfile</code><a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h2>
 <p>Dockerfile (relative to <a href="#build_directory"><code>build_directory</code></a>) to use when building the image in <a href="#build_directory"><code>build_directory</code></a>. Defaults to <code>Dockerfile</code> if not set.</p>
 <p>The Dockerfile must be within <a href="#build_directory"><code>build_directory</code></a>.</p>
 <p><code>dockerfile</code> must always be specified with Unix-style (<code>path/to/thing</code>) paths, even when running on Windows.</p>
-<p>Available since v0.31.</p>
 <h2 id="command"><code>command</code><a class="headerlink" href="#command" title="Permanent link">&para;</a></h2>
 <p>Command to run when the container starts.</p>
 <p>If not provided, the default command for the image will be run.</p>
@@ -1305,37 +1292,8 @@ directly.</p>
 <p>See the Docker docs for <a href="https://docs.docker.com/engine/reference/builder/#cmd"><code>CMD</code></a> and
 <a href="https://docs.docker.com/engine/reference/builder/#entrypoint"><code>ENTRYPOINT</code></a> for more information on how the entrypoint is used.
 batect will always convert the entrypoint provided here to the exec form when passed to Docker.</p>
-<p>Available since v0.37.</p>
 <h2 id="environment"><code>environment</code><a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
-<p>List of environment variables (in <code>name: value</code> format) for the container.</p>
-<p>Prior to v0.21, environment variables were required to be supplied in <code>name=value</code> format.</p>
-<h3 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">&para;</a></h3>
-<p>In addition to providing a literal value, you can pass environment variables from the host
-(ie. where you run batect) to the container by using any of the following formats:</p>
-<ul>
-<li>
-<p><code>$name</code> or <code>${name}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
-<p>If the referenced host variable is not present, batect will show an error message and not start the task.</p>
-</li>
-<li>
-<p><code>${name:-default}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
-<p>If the referenced host variable is not present, <code>default</code> is used instead.</p>
-<p><code>default</code> can be empty, so <code>${name:-}</code> will use the value of <code>name</code> from the host if it is
-set, or a blank value if it is not set.</p>
-</li>
-</ul>
-<p>You can also refer to the value of a <a href="ConfigVariables.html">config variable</a> with <code>&lt;name</code> or <code>&lt;{name}</code>.</p>
-<p>For example, to set <code>SUPER_SECRET_PASSWORD</code> in the container to the value of the <code>MY_PASSWORD</code> environment variable on the host,
-use <code>SUPER_SECRET_PASSWORD: $MY_PASSWORD</code> or <code>SUPER_SECRET_PASSWORD: ${MY_PASSWORD}</code>. Or, to default it to <code>insecure</code> if
-<code>MY_PASSWORD</code> is not set, use <code>SUPER_SECRET_PASSWORD: ${MY_PASSWORD:-insecure}</code>.</p>
-<p>Substitution in the middle of values is not supported (eg. <code>SUPER_SECRET_PASSWORD: My password is $MY_PASSWORD</code> will not work).</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Be careful when using this - by relying on the host's environment variables, you are introducing inconsistency to how the container
-runs between hosts, which is something you generally want to avoid.</p>
-</div>
-<p>The curly brace syntax for environment variables, including the ability to specify default values for environment variables,
-was added in v0.21. <a href="ConfigVariables.html">Config variables</a> were added in v0.40.</p>
+<p>List of environment variables (in <code>name: value</code> format) for the container. Values can be <a href="Overview.html#expressions">expressions</a>.</p>
 <h3 id="term"><code>TERM</code><a class="headerlink" href="#term" title="Permanent link">&para;</a></h3>
 <p>The <code>TERM</code> environment variable, if set on the host, is always automatically passed through to the container. This ensures that features such as
 coloured output continue to work correctly inside the container.</p>
@@ -1392,7 +1350,6 @@ with users running on other operating systems, using Unix-style paths is recomme
 </li>
 </ul>
 <p>Note that the <code>local</code> device mounts will be different for Windows and Unix-like hosts. See the <a href="https://docs.docker.com/engine/reference/commandline/run/#add-host-device-to-container---device">Docker guide for adding host devices to containers</a> for more information.</p>
-<p>Available since v0.39.</p>
 <h2 id="ports"><code>ports</code><a class="headerlink" href="#ports" title="Permanent link">&para;</a></h2>
 <p>List of ports to make available to the host machine.</p>
 <p>Only TCP ports are supported at present.</p>
@@ -1480,24 +1437,19 @@ same <a href="#run_as_current_user">user and group</a> as the container's <code>
 <p>It is recommended that you try to include any setup work in your image's Dockerfile wherever possible (and not use setup commands), as setup commands must be
 run every time the container starts whereas commands included in your image's Dockerfile only run when the image needs to be built.</p>
 </div>
-<p>Available since v0.38.</p>
 <h2 id="privileged"><code>privileged</code><a class="headerlink" href="#privileged" title="Permanent link">&para;</a></h2>
 <p>Set to <code>true</code> to run the container in <a href="https://docs.docker.com/engine/reference/commandline/run/#full-container-capabilities---privileged">privileged mode</a>.</p>
 <p>See also <a href="#capabilities_to_add-and-capabilities_to_drop"><code>capabilities_to_add</code> and <code>capabilities_to_drop</code></a>.</p>
-<p>Available since v0.29.</p>
 <h2 id="capabilities_to_add-and-capabilities_to_drop"><code>capabilities_to_add</code> and <code>capabilities_to_drop</code><a class="headerlink" href="#capabilities_to_add-and-capabilities_to_drop" title="Permanent link">&para;</a></h2>
 <p>List of <a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">capabilities</a> to add or drop for the container.</p>
 <p>This is equivalent to passing <a href="https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities"><code>--cap-add</code> or <code>--cap-drop</code></a> to <code>docker run</code>.</p>
-<p>Available since v0.31.</p>
 <h2 id="enable_init_process"><code>enable_init_process</code><a class="headerlink" href="#enable_init_process" title="Permanent link">&para;</a></h2>
 <p>Set to <code>true</code> to pass the <a href="https://docs.docker.com/engine/reference/run/#specify-an-init-process"><code>--init</code></a> flag when running the container.
 This creates the container with a simple PID 1 process to handle the responsibilities of the init system, which is required for some applications to behave correctly.</p>
 <p><a href="https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html">Read this article</a> if you're interested in more information about the behaviour
 of different processes running as PID 1 and why this flag was introduced.</p>
-<p>Available since v0.30.</p>
 <h2 id="additional_hostnames"><code>additional_hostnames</code><a class="headerlink" href="#additional_hostnames" title="Permanent link">&para;</a></h2>
 <p>List of hostnames to associate with this container, in addition to the default hostname (the name of the container).</p>
-<p>Available since v0.37.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>For more examples and real-world scenarios, take a look at the <a href="../SampleProjects.html">sample projects</a>.</p>
 <h3 id="minimal-configuration-with-existing-image">Minimal configuration with existing image<a class="headerlink" href="#minimal-configuration-with-existing-image" title="Permanent link">&para;</a></h3>

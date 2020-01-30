@@ -379,6 +379,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#expressions" class="md-nav__link">
+    Expressions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#anchors-aliases-extensions-and-merging" class="md-nav__link">
     Anchors, aliases, extensions and merging
   </a>
@@ -781,6 +788,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#expressions" class="md-nav__link">
+    Expressions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#anchors-aliases-extensions-and-merging" class="md-nav__link">
     Anchors, aliases, extensions and merging
   </a>
@@ -814,9 +828,15 @@
                 
                 
                 <h1 id="configuration-file-overview">Configuration file overview<a class="headerlink" href="#configuration-file-overview" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This page reflects the options available in the <a href="https://github.com/batect/batect/releases/latest">most recent version</a>
+of batect.</p>
+</div>
 <p>batect uses a YAML-based configuration file.</p>
 <p>By convention, this file is called <code>batect.yml</code> and is placed in the root of your project (alongside the <code>batect</code> script).
-You can, however, use a different name or location, and tell <code>batect</code> where to find it with the <code>-f</code> option.</p>
+You can use a different name or location and tell <code>batect</code> where to find it with the
+<a href="../CLIReference.html#use-a-non-standard-configuration-file-name-config-file-or-f"><code>-f</code> option</a>.</p>
 <p>The root of the configuration file is made up of:</p>
 <h2 id="project_name"><code>project_name</code><a class="headerlink" href="#project_name" title="Permanent link">&para;</a></h2>
 <p>The name of your project. Used to label any images built.</p>
@@ -855,8 +875,33 @@ file is <code>/home/alex/projects/my-cool-app/batect.yml</code> and you do not p
 <h2 id="tasks"><code>tasks</code><a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
 <p>Definitions for each of your tasks, the actions you launch through batect, in <code>name: options</code> format.</p>
 <p><a href="Tasks.html">Detailed reference for <code>tasks</code></a></p>
+<h2 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">&para;</a></h2>
+<p>Some fields support expressions - references to environment variables on the host or <a href="ConfigVariables.html">config variables</a>.</p>
+<p>You can pass environment variables from the host (ie. where you run batect) to the container by using any of the following formats:</p>
+<ul>
+<li>
+<p><code>$name</code> or <code>${name}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
+<p>If <code>name</code> is not set on the host, batect will show an error message and not start the task.</p>
+</li>
+<li>
+<p><code>${name:-default}</code>: use the value of <code>name</code> from the host as the value inside the container.</p>
+<p>If <code>name</code> is not set on the host, <code>default</code> is used instead.</p>
+<p><code>default</code> can be empty, so <code>${name:-}</code> will use the value of <code>name</code> from the host if it is
+set, or a blank value if it is not set.</p>
+<p><code>default</code> is treated as a literal, it cannot be a reference to another variable.</p>
+</li>
+</ul>
+<p>For example, to refer to the value of the <code>MY_PASSWORD</code> environment variable on the host, use <code>$MY_PASSWORD</code> or
+<code>${MY_PASSWORD}</code>. Or, to default to <code>insecure</code> if <code>MY_PASSWORD</code> is not set, use <code>${MY_PASSWORD:-insecure}</code>.</p>
+<p>You can refer to the value of a <a href="ConfigVariables.html">config variable</a> with <code>&lt;name</code> or <code>&lt;{name}</code>.
+Default values for config variables can be specified with <a href="ConfigVariables.html#default"><code>default</code></a> when defining them.</p>
+<p>When given without braces, <code>name</code> can only contain letters, numbers and underscores.
+Any other characters are treated as literals (eg. <code>$MY_VAR, 2, 3</code> with <code>MY_VAR</code> set to <code>1</code> results
+in <code>1, 2, 3</code>).</p>
+<p>When given with braces, <code>name</code> can contain any character except a closing brace (<code>}</code>) or colon (<code>:</code>).</p>
+<p>Combining expressions and literal values is supported (eg. <code>My password is $MY_PASSWORD</code> or <code>&lt;{SERVER}:8080</code>).</p>
+<p>In fields that support expressions, you can escape <code>$</code> and <code>&lt;</code> with a backslash (<code>\</code>).</p>
 <h2 id="anchors-aliases-extensions-and-merging">Anchors, aliases, extensions and merging<a class="headerlink" href="#anchors-aliases-extensions-and-merging" title="Permanent link">&para;</a></h2>
-<p>Available since v0.27.</p>
 <p>batect supports YAML anchors and aliases. This allows you to specify a value in one place, and
 refer to it elsewhere. For example:</p>
 <div class="codehilite"><pre><span></span><span class="nt">somewhere</span><span class="p">:</span> <span class="nl">&amp;value-used-multiple-times</span> <span class="l l-Scalar l-Scalar-Plain">the-value</span>
