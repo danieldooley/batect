@@ -1314,8 +1314,8 @@ coloured output continue to work correctly inside the container.</p>
 <p>Standard Docker <code>local:container</code> or <code>local:container:options</code> format</p>
 </li>
 <li>
-<p>An expanded format:
-  <div class="codehilite"><pre><span></span><span class="nt">containers</span><span class="p">:</span>
+<p>An expanded format:</p>
+<div class="codehilite"><pre><span></span><span class="nt">containers</span><span class="p">:</span>
   <span class="nt">my-container</span><span class="p">:</span>
     <span class="l l-Scalar l-Scalar-Plain">...</span>
     <span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
@@ -1323,7 +1323,9 @@ coloured output continue to work correctly inside the container.</p>
       <span class="p p-Indicator">-</span> <span class="nt">local</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
         <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/code</span>
         <span class="nt">options</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cached</span>
-</pre></div></p>
+</pre></div>
+
+<p>When using this expanded format, <code>local</code> can be an <a href="Overview.html#expressions">expression</a>.</p>
 </li>
 </ul>
 <p>On Windows, the local path can use either Windows-style (<code>path\to\thing</code>) or Unix-style (<code>path/to/thing</code>) paths, but for compatibility
